@@ -1,0 +1,6 @@
+.claude/settings.local.json
+__pycache__/
+*.pyc
+*.png
+*.jpg
+.env
