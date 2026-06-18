@@ -63,8 +63,8 @@ HAP_PROMPT = (
     "4:5 portrait format, no text, magazine quality."
 )
 
-out_cover = r"C:\Users\VENTO\Documents\confirmation_bias_cover.png"
-out_hap = r"C:\Users\VENTO\Documents\confirmation_bias_hap.png"
+out_cover = os.path.join(os.path.expanduser("~"), "Documents", "confirmation_bias_cover.png")
+out_hap = os.path.join(os.path.expanduser("~"), "Documents", "confirmation_bias_hap.png")
 
 import time
 
