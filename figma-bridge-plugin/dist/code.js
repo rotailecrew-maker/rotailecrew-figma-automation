@@ -1332,6 +1332,9 @@ var __async = (__this, __arguments, generator) => {
             node.cornerRadius = params.cornerRadius;
           }
           yield appendToParentIfProvided(node, params.parentId);
+          if (typeof params.insertAtIndex === "number" && node.parent && "insertChild" in node.parent) {
+            node.parent.insertChild(params.insertAtIndex, node);
+          }
           positionNode(node, params.x, params.y);
           return {
             type: request.type,
