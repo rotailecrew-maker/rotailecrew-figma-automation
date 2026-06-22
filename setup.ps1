@@ -41,7 +41,7 @@ if (-not (Test-Path $localSettings)) {
     Write-Host "  YAPILACAK: Asagidaki dosyayi ac ve API keylerini doldur:" -ForegroundColor Red
     Write-Host "  $((Resolve-Path $localSettings).Path)" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "  GEMINI_API_KEY : https://aistudio.google.com -> Get API Key" -ForegroundColor White
+    Write-Host "  OPENAI_API_KEY : https://platform.openai.com -> API Keys" -ForegroundColor White
     Write-Host "  FIGMA_TOKEN    : Figma -> Account Settings -> Personal Access Tokens" -ForegroundColor White
     Write-Host ""
     Write-Host "  Doldurduktan sonra bu scripti tekrar calistir." -ForegroundColor Yellow
@@ -50,17 +50,17 @@ if (-not (Test-Path $localSettings)) {
 
 # Placeholder degerler hala duruyorsa uyar
 $settingsContent = Get-Content $localSettings -Raw
-$geminiMissing = $settingsContent -match "BURAYA_API_KEY_YAZ"
+$openaiMissing = $settingsContent -match "BURAYA_OPENAI_API_KEY_YAZ"
 $figmaMissing  = $settingsContent -match "BURAYA_FIGMA_TOKEN_YAZI"
 
-if ($geminiMissing -or $figmaMissing) {
+if ($openaiMissing -or $figmaMissing) {
     Write-Host "  HATA: API keyleri henuz doldurulmamis:" -ForegroundColor Red
-    if ($geminiMissing) { Write-Host "    - GEMINI_API_KEY eksik  -> https://aistudio.google.com -> Get API Key" -ForegroundColor Red }
+    if ($openaiMissing) { Write-Host "    - OPENAI_API_KEY eksik  -> https://platform.openai.com -> API Keys" -ForegroundColor Red }
     if ($figmaMissing)  { Write-Host "    - FIGMA_TOKEN eksik     -> Figma -> Account Settings -> Personal Access Tokens" -ForegroundColor Red }
     Write-Host "  Dosyayi ac ve doldur: $((Resolve-Path $localSettings).Path)" -ForegroundColor Cyan
     exit 1
 }
-Write-Host "  OK: GEMINI_API_KEY ve FIGMA_TOKEN mevcut." -ForegroundColor Green
+Write-Host "  OK: OPENAI_API_KEY ve FIGMA_TOKEN mevcut." -ForegroundColor Green
 
 # -------------------------------------------------------
 # 4. Figma plugin talimat
@@ -69,10 +69,10 @@ Write-Host "[4/6] Figma Plugin..." -ForegroundColor Yellow
 $pluginPath = Join-Path (Get-Location) "figma-bridge-plugin\manifest.json"
 Write-Host "  Figma'da plugin kurulu degil mi? Adimlar:" -ForegroundColor White
 Write-Host "    1. Figma'yi ac" -ForegroundColor White
-Write-Host "    2. Plugins > Development > Import plugin from manifest" -ForegroundColor White
-Write-Host "    3. Su dosyayi sec:" -ForegroundColor White
-Write-Host "       $pluginPath" -ForegroundColor Cyan
-Write-Host "  (Daha once kurduysan bu adimi atla)" -ForegroundColor DarkGray
+    Write-Host "    2. Plugins > Development > Import plugin from manifest" -ForegroundColor White
+    Write-Host "    3. Su dosyayi sec:" -ForegroundColor White
+    Write-Host "       $pluginPath" -ForegroundColor Cyan
+    Write-Host "  (Daha once kurduysan bu adimi atla)" -ForegroundColor DarkGray
 
 # -------------------------------------------------------
 # 5. Bridge sunucusu - port 1994 kontrolu ve baslat
@@ -113,26 +113,26 @@ Write-Host "     -> 'WebSocket Connected' gormeli" -ForegroundColor Green
 Write-Host "     -> 'Disconnected' goruyorsan: yeni terminalde 'npx @gethopp/figma-mcp-bridge@0.0.15' calistir" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "  2. Bu klasorde Claude Code'u baslat:" -ForegroundColor White
-Write-Host "     claude" -ForegroundColor Cyan
+    Write-Host "     claude" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "  3. Claude'a icerik ver:" -ForegroundColor White
-Write-Host "     1-Post Basligi (Ingilizce)" -ForegroundColor DarkGray
-Write-Host "     2-Post Basligi (Turkce)" -ForegroundColor DarkGray
-Write-Host "     3-Aciklama metni" -ForegroundColor DarkGray
+    Write-Host "     1-Post Basligi (Ingilizce)" -ForegroundColor DarkGray
+    Write-Host "     2-Post Basligi (Turkce)" -ForegroundColor DarkGray
+    Write-Host "     3-Aciklama metni" -ForegroundColor DarkGray
 Write-Host ""
 Write-Host "=== SORUN GIDERME ===" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Plugin 'Disconnected' gosteriyorsa:" -ForegroundColor White
-Write-Host "  -> Yeni bir terminal ac" -ForegroundColor White
-Write-Host "  -> Calistir: npx @gethopp/figma-mcp-bridge@0.0.15" -ForegroundColor Cyan
-Write-Host "  -> O terminali KAPAMA, bridge orada calisiyor" -ForegroundColor Red
-Write-Host "  -> Figma'da plugini kapat ve tekrar ac" -ForegroundColor White
+    Write-Host "  -> Yeni bir terminal ac" -ForegroundColor White
+    Write-Host "  -> Calistir: npx @gethopp/figma-mcp-bridge@0.0.15" -ForegroundColor Cyan
+    Write-Host "  -> O terminali KAPAMA, bridge orada calisiyor" -ForegroundColor Red
+    Write-Host "  -> Figma'da plugini kapat ve tekrar ac" -ForegroundColor White
 Write-Host ""
 Write-Host "Port 1994 kontrolu (sorun varsa calistir):" -ForegroundColor White
-Write-Host "  netstat -ano | Select-String ':1994'" -ForegroundColor Cyan
-Write-Host "  -> 'LISTENING' gorulmeli. Gorunmuyorsa bridge baslatilmamis demektir." -ForegroundColor White
+    Write-Host "  netstat -ano | Select-String ':1994'" -ForegroundColor Cyan
+    Write-Host "  -> 'LISTENING' gorulmeli. Gorunmuyorsa bridge baslatilmamis demektir." -ForegroundColor White
 Write-Host ""
 Write-Host "API key hatasi aliyorsan:" -ForegroundColor White
-Write-Host "  -> .claude\settings.local.json dosyasini kontrol et" -ForegroundColor Cyan
-Write-Host "  -> GEMINI_API_KEY ve FIGMA_TOKEN dolu olmali" -ForegroundColor White
+    Write-Host "  -> .claude\settings.local.json dosyasini kontrol et" -ForegroundColor Cyan
+    Write-Host "  -> OPENAI_API_KEY ve FIGMA_TOKEN dolu olmali" -ForegroundColor White
 Write-Host ""
