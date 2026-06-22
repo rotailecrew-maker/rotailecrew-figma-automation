@@ -8,7 +8,7 @@ Claude'a icerigi ver (baslik + metin) → Figma'da kapak + hap bilgi + yonlendir
 
 **Post Yapisi:**
 - **Kapak** — Buyuk baslik + arka plan gorseli
-- **Hap Bilgi** — Aciklama metni + arka plan gorseli  
+- **Hap Bilgi** — Aciklama metni + arka plan gorseli
 - **Yonlendirme** — Sabit CTA (Post 301 kopyasi, hic degismez)
 
 ## Gereksinimler
@@ -16,7 +16,7 @@ Claude'a icerigi ver (baslik + metin) → Figma'da kapak + hap bilgi + yonlendir
 - [Node.js](https://nodejs.org) v18+
 - [Claude Code](https://claude.ai/code) CLI
 - Figma hesabi (Rotailecrew dosyasina erisim)
-- Gemini API key (gorsel uretimi icin — ucretsiz tier)
+- OpenAI API key (gorsel uretimi icin — gpt-image-1)
 
 ## Kurulum
 
@@ -31,20 +31,20 @@ Script otomatik olarak:
 - MCP server ayarlarini yapar
 - `settings.local.json` sablonu olusturur
 
-### API Key'leri Ekle
+### API Key Ekle
 
 `.claude\settings.local.json` dosyasini ac ve doldurun:
 
 ```json
 {
   "env": {
-    "GEMINI_API_KEY": "AIza...",
+    "OPENAI_API_KEY": "sk-...",
     "FIGMA_TOKEN": "figd_..."
   }
 }
 ```
 
-- **Gemini API Key:** [aistudio.google.com](https://aistudio.google.com) > Get API Key
+- **OpenAI API Key:** [platform.openai.com](https://platform.openai.com) > API Keys
 - **Figma Token:** Figma > Account Settings > Personal Access Tokens
 
 ### Figma Plugin Yukle
@@ -83,7 +83,7 @@ rotailecrew-figma-automation/
 ├── figma-bridge-plugin/       # Figma gelistirici plugini
 │   ├── manifest.json
 │   └── dist/
-├── generate_images.py         # Gemini ile gorsel uretici
+├── generate_images.py         # OpenAI gpt-image-1 ile gorsel uretici
 ├── settings.local.template.json
 ├── setup.ps1                  # Kurulum scripti
 └── README.md
