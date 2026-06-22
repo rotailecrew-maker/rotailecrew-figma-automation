@@ -90,22 +90,24 @@ set_text_content(nodeId=<yeni hap TR başlık TEXT>, characters="<Türkçe başl
 set_text_content(nodeId=<yeni hap açıklama TEXT>, characters="<Açıklama — kullanıcının verdiği metni aynen koy>")
 ```
 
-### 7. Arka plan görsellerini ata
-`create_image` ile görseli frame içine ekle (parentId = yeni_kapak veya yeni_hap),
-ardından z-order'ı düzelt:
+### 7. Arka plan görsellerini ata (Kullanıcı yapar — kalıcı yöntem)
+`create_image` KULLANMA. Görseller Figma'nın kendi Place Image özelliğiyle atanmalıdır;
+aksi hâlde dosya kapatılıp açıldığında görseller kaybolur.
 
-**Z-order düzeltme adımları (her frame için):**
-1. Frame içindeki diğer tüm child'ları (Background hariç) canvas root'a taşı (`reparent_nodes` → parentId=`0:1`)
-2. Eski Background node'unu sil (`delete_nodes`)
-3. `create_image` ile yeni görseli frame'e ekle (parentId=yeni_kapak, x=0, y=0, width=1080, height=1350)
-4. Dışarı çıkardığın child'ları frame'e geri taşı (`reparent_nodes` → parentId=yeni_kapak)
-   → Yeni image en altta, diğerleri üstte olur.
+Claude şunu söyler:
+> "Görseller hazır: `~/Documents/cover.png` ve `~/Documents/hap.png`
+> Şimdi Figma'da şunları yap:
+> 1. Yeni Kapak frame'indeki **Background** rectangle'ını seç
+> 2. **Ctrl+Shift+K** → `cover.png` dosyasını seç
+> 3. Yeni Hap Bilgi frame'indeki **Background** rectangle'ını seç
+> 4. **Ctrl+Shift+K** → `hap.png` dosyasını seç"
 
 ### 8. Sonucu doğrula
+Kullanıcı görselleri yerleştirdikten sonra:
 ```
 get_node(nodeId=yeni_kapak)
 ```
-Başlık, görseller ve pozisyon doğruysa kullanıcıya tamamlandı mesajı ver.
+Başlık ve pozisyon doğruysa kullanıcıya tamamlandı mesajı ver.
 
 ## Görsel Prompt Yazma Kuralları
 `generate_images.py` içindeki promptları güncellersen:
@@ -118,6 +120,7 @@ Başlık, görseller ve pozisyon doğruysa kullanıcıya tamamlandı mesajı ver
 ## Önemli Kurallar
 - **Yönlendirme slaydına (son slayt) asla metin veya görsel yazma**
 - **Açıklama metnini kullanıcının verdiği gibi aynen geçir, paraphrase etme**
+- **Arka plan görseli için asla `create_image` kullanma** — görseller Ctrl+Shift+K ile manuel atanır
 - `figma-bridge` araçlarını doğrudan kullan, Figma REST API'ye gitme
 - Her adımdan sonra kısa durum raporu ver
 - Hata olursa açıkla ve alternatif öner
