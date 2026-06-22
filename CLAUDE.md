@@ -15,8 +15,8 @@ Kullanıcının verdiği içerikle Instagram post serisi (3 slayt) oluşturmak:
 
 ## Araçlar
 - **figma-bridge MCP** → Figma node okuma/yazma
-- **generate_images.py** → Görsel üretme (Gemini Imagen API)
-- **FIGMA_TOKEN** ve **GEMINI_API_KEY** env'den otomatik okunur
+- **generate_images.py** → Görsel üretme (OpenAI gpt-image-1)
+- **FIGMA_TOKEN** ve **OPENAI_API_KEY** env'den otomatik okunur
 
 ## Figma Dosyası
 - File key: `dePZYFYYLabkk3IQdfGOqH` (Rotailecrew)
@@ -58,7 +58,6 @@ list_files → aktif fileKey'i not al
 `generate_images.py` dosyasındaki `COVER_PROMPT` ve `HAP_PROMPT` değişkenlerini
 verilen içeriğe uygun İngilizce promptlarla güncelle, sonra çalıştır:
 ```powershell
-$env:GEMINI_API_KEY = "..."  # settings.local.json'dan zaten okunur
 python generate_images.py
 ```
 Çıktı:
@@ -109,6 +108,5 @@ Başlık, görseller ve pozisyon doğruysa kullanıcıya tamamlandı mesajı ver
 ## Önemli Kurallar
 - **Yönlendirme slaydına (son slayt) asla metin veya görsel yazma**
 - `figma-bridge` araçlarını doğrudan kullan, Figma REST API'ye gitme
-- Görsel üretimde Imagen 4 önce dene, başarısız olursa Flash'a geç
 - Her adımdan sonra kısa durum raporu ver
 - Hata olursa açıkla ve alternatif öner
